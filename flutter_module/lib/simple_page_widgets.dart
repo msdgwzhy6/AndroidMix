@@ -1,16 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 import 'platform_view.dart';
 
+
 class FirstRouteWidget extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    return new _FirstRouteWidgetState();
-  }
+  State<StatefulWidget> createState() => _FirstRouteWidgetState();
 }
-class _FirstRouteWidgetState extends State<FirstRouteWidget>{
+
+class _FirstRouteWidgetState extends State<FirstRouteWidget> {
   _FirstRouteWidgetState();
+
+  // flutter 侧MethodChannel配置，channel name需要和native侧一致
+  static const MethodChannel _methodChannel = MethodChannel('flutter_native_channel');
+  String _systemVersion = '';
+
+  Future<dynamic> _getPlatformVersion() async {
+
+    try {
+      final String result = await _methodChannel.invokeMethod('getPlatformVersion');
+      print('getPlatformVersion:' + result);
+      setState(() {
+        _systemVersion = result;
+      });
+    } on PlatformException catch (e) {
+      print(e.message);
+    }
+
+  }
 
   @override
   void initState() {
@@ -45,130 +64,78 @@ class _FirstRouteWidgetState extends State<FirstRouteWidget>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('First Route'),
-      ),
+      appBar: AppBar(title: const Text('First Route')),
       body: Center(
-        child:
-        Column(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: 
-          <Widget>[
+          children: <Widget>[
             RaisedButton(
-                child: Text('Open native page'),
-                onPressed: () {
-                  print("open natve page!");
-                  FlutterBoost.singleton.open("native").then((Map value) {
-                    print(
-                        "call me when page is finished. did recieve native route result $value");
-                  });
-                },
-              ),
-              RaisedButton(
-                child: Text('Open FF route'),
-                onPressed: () {
-                  print("open FF page!");
-                  FlutterBoost.singleton.open("firstFirst").then((Map value) {
-                    print(
-                        "call me when page is finished. did recieve FF route result $value");
-                  });
-                },
-              ),
-              RaisedButton(
-                child: Text('Open second route1'),
-                onPressed: () {
-                  print("open second page!");
-                  FlutterBoost.singleton.open("second").then((Map value) {
-                    print(
-                        "call me when page is finished. did recieve second route result $value");
-                  });
-                },
-              ),
-
-              RaisedButton(
-                  child: Text('Present second stateful route'),
-                  onPressed: () {
-                    print("Present second stateful page!");
-                    FlutterBoost.singleton.open("secondStateful",urlParams:<dynamic,dynamic>{"present":true}).then((Map value) {
-                      print(
-                          "call me when page is finished. did recieve second stateful route result $value");
-                    });
-                  },
-                ),
-                RaisedButton(
-                  child: Text('Present second route'),
-                  onPressed: () {
-                    print("Present second page!");
-                    FlutterBoost.singleton.open("second",urlParams:<dynamic,dynamic>{"present":true}).then((Map value) {
-                      print(
-                          "call me when page is finished. did recieve second route result $value");
-                    });
-                  },
-                ),
-            ],
-        ),
-      ),
-    );
-  }
-}
-class FirstFirstRouteWidget extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return new _FirstFirstRouteWidgetState();
-  }
-}
-
-class _FirstFirstRouteWidgetState extends State<FirstFirstRouteWidget>{
-  _FirstFirstRouteWidgetState();
-
-  @override
-  void initState() {
-    print('initState');
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    print('didChangeDependencies');
-    super.didChangeDependencies();
-  }
-
-  @override
-  void didUpdateWidget(FirstFirstRouteWidget oldWidget) {
-    print('didUpdateWidget');
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
-  void deactivate() {
-    print('deactivate');
-    super.deactivate();
-  }
-
-  @override
-  void dispose() {
-    print('[XDEBUG] - FirstFirstRouteWidget is disposing~');
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('First Route'),
-      ),
-      body: Center(
-        child: RaisedButton(
-          child: Text('Open first route'),
-          onPressed: () {
-
-            print("open first page again!");
-            FlutterBoost.singleton.open("first").then((Map value){
-              print("did recieve first route result");
-              print("did recieve first route result $value");
-            });
-
-          },
+              child: const Text('Open native page'),
+              onPressed: () {
+                print('open natve page!');
+                FlutterBoost.singleton
+                    .open('native')
+                    .then((Map<dynamic, dynamic> value) {
+                  print(
+                      'call me when page is finished. did recieve native route result $value');
+                });
+              },
+            ),
+            RaisedButton(
+              child: const Text('Open FF route'),
+              onPressed: () {
+                print('open FF page!');
+                FlutterBoost.singleton
+                    .open('firstFirst')
+                    .then((Map<dynamic, dynamic> value) {
+                  print(
+                      'call me when page is finished. did recieve FF route result $value');
+                });
+              },
+            ),
+            RaisedButton(
+              child: const Text('Open second route1'),
+              onPressed: () {
+                print('open second page!');
+                FlutterBoost.singleton
+                    .open('second')
+                    .then((Map<dynamic, dynamic> value) {
+                  print(
+                      'call me when page is finished. did recieve second route result $value');
+                });
+              },
+            ),
+            RaisedButton(
+              child: const Text('Present second stateful route'),
+              onPressed: () {
+                print('Present second stateful page!');
+                FlutterBoost.singleton.open('secondStateful',
+                    urlParams: <String, dynamic>{
+                      'present': true
+                    }).then((Map<dynamic, dynamic> value) {
+                  print(
+                      'call me when page is finished. did recieve second stateful route result $value');
+                });
+              },
+            ),
+            RaisedButton(
+              child: const Text('Present second route'),
+              onPressed: () {
+                print('Present second page!');
+                FlutterBoost.singleton.open('second',
+                    urlParams: <String, dynamic>{
+                      'present': true
+                    }).then((Map<dynamic, dynamic> value) {
+                  print(
+                      'call me when page is finished. did recieve second route result $value');
+                });
+              },
+            ),
+            RaisedButton(
+              child: Text('Get system version by method channel:' + _systemVersion),
+              onPressed: () => _getPlatformVersion(),
+            ),
+          ],
         ),
       ),
     );

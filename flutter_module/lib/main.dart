@@ -19,7 +19,7 @@ class _MyAppState extends State<MyApp> {
     FlutterBoost.singleton.registerPageBuilders({
       'embeded': (pageName, params, _)=>EmbededFirstRouteWidget(),
       'first': (pageName, params, _) => FirstRouteWidget(),
-      'firstFirst': (pageName, params, _) => FirstFirstRouteWidget(),
+      'firstFirst': (pageName, params, _) => FirstRouteWidget(),
       'second': (pageName, params, _) => SecondRouteWidget(),
       'secondStateful': (pageName, params, _) => SecondStatefulRouteWidget(),
       'tab': (pageName, params, _) => TabRouteWidget(),
