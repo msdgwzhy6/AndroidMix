@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 import 'platform_view.dart';
 
-
 class FirstRouteWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _FirstRouteWidgetState();
@@ -14,13 +13,14 @@ class _FirstRouteWidgetState extends State<FirstRouteWidget> {
   _FirstRouteWidgetState();
 
   // flutter 侧MethodChannel配置，channel name需要和native侧一致
-  static const MethodChannel _methodChannel = MethodChannel('flutter_native_channel');
+  static const MethodChannel _methodChannel =
+      MethodChannel('flutter_native_channel');
   String _systemVersion = '';
 
   Future<dynamic> _getPlatformVersion() async {
-
     try {
-      final String result = await _methodChannel.invokeMethod('getPlatformVersion');
+      final String result =
+          await _methodChannel.invokeMethod('getPlatformVersion');
       print('getPlatformVersion:' + result);
       setState(() {
         _systemVersion = result;
@@ -28,7 +28,6 @@ class _FirstRouteWidgetState extends State<FirstRouteWidget> {
     } on PlatformException catch (e) {
       print(e.message);
     }
-
   }
 
   @override
@@ -132,7 +131,8 @@ class _FirstRouteWidgetState extends State<FirstRouteWidget> {
               },
             ),
             RaisedButton(
-              child: Text('Get system version by method channel:' + _systemVersion),
+              child: Text(
+                  'Get system version by method channel:' + _systemVersion),
               onPressed: () => _getPlatformVersion(),
             ),
           ],
@@ -148,7 +148,6 @@ class EmbededFirstRouteWidget extends StatefulWidget {
     // TODO: implement createState
     return _EmbededFirstRouteWidgetState();
   }
-
 }
 
 class _EmbededFirstRouteWidgetState extends State<EmbededFirstRouteWidget> {
@@ -170,6 +169,7 @@ class _EmbededFirstRouteWidgetState extends State<EmbededFirstRouteWidget> {
       ),
     );
   }
+
   @override
   void dispose() {
     print('[XDEBUG]:_EmbededFirstRouteWidgetState disposing~');
@@ -184,7 +184,47 @@ class SecondStatefulRouteWidget extends StatefulWidget {
     return _SecondStatefulRouteWidgetState();
   }
 }
-class _SecondStatefulRouteWidgetState extends State<SecondStatefulRouteWidget>{
+
+class _SecondStatefulRouteWidgetState extends State<SecondStatefulRouteWidget> {
+  static const eventPlugin = const EventChannel('native_flutter_channel');
+  var _streamSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    _streamSubscription = eventPlugin.receiveBroadcastStream().listen(_onData,
+        onError: _onError, onDone: _onDone, cancelOnError: true);
+  }
+
+  void _onData(Object event) {
+    print("_onData_ " + event);
+    // 接收数据
+    setState(() {
+
+    });
+  }
+
+  void _onError(Object error) {
+    // 发生错误时被回调
+    print("_onData_ " + error);
+    setState(() {
+      //eventVal = "错误";
+    });
+  }
+
+  void _onDone() {
+    //结束时调用
+    print("_onData_ done" );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (_streamSubscription != null) {
+      _streamSubscription.cancel();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -199,18 +239,12 @@ class _SecondStatefulRouteWidgetState extends State<SecondStatefulRouteWidget>{
             BoostContainerSettings settings =
                 BoostContainer.of(context).settings;
             FlutterBoost.singleton.close(settings.uniqueId,
-                result: <dynamic,dynamic>{"result": "data from second"});
+                result: <dynamic, dynamic>{"result": "data from second"});
           },
           child: Text('Go back with result!'),
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    print('[XDEBUG]:SecondStatefulRouteWidget disposing~');
-    super.dispose();
   }
 }
 
@@ -229,7 +263,7 @@ class SecondRouteWidget extends StatelessWidget {
             BoostContainerSettings settings =
                 BoostContainer.of(context).settings;
             FlutterBoost.singleton.close(settings.uniqueId,
-                result: <dynamic,dynamic>{"result": "data from second"});
+                result: <dynamic, dynamic>{"result": "data from second"});
           },
           child: Text('Go back with result!'),
         ),
@@ -262,7 +296,7 @@ class PlatformRouteWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:Text("Platform Route"),
+        title: Text("Platform Route"),
       ),
       body: Center(
         child: RaisedButton(
@@ -279,8 +313,10 @@ class PlatformRouteWidget extends StatelessWidget {
     );
   }
 }
+
 class FlutterRouteWidget extends StatefulWidget {
-  FlutterRouteWidget({this.params,this.message});
+  FlutterRouteWidget({this.params, this.message});
+
   final Map params;
   final String message;
 
@@ -293,144 +329,146 @@ class _FlutterRouteWidgetState extends State<FlutterRouteWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final String message=widget.message;
+    final String message = widget.message;
     return Scaffold(
       appBar: AppBar(
-        brightness:Brightness.light,
+        brightness: Brightness.light,
         backgroundColor: Colors.white,
-        textTheme:new TextTheme(title: TextStyle(color: Colors.black)) ,
-
+        textTheme: new TextTheme(title: TextStyle(color: Colors.black)),
         title: Text('flutter_boost_example'),
       ),
       body: SingleChildScrollView(
-        child:Container(
-            margin: const EdgeInsets.all(24.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  margin: const EdgeInsets.only(top: 10.0,bottom: 20.0),
-                  child: Text(
-                    message ?? "This is a flutter activity \n params:${widget.params}",
-                    style: TextStyle(fontSize: 28.0, color: Colors.blue),
-                  ),
-                  alignment: AlignmentDirectional.center,
+        child: Container(
+          margin: const EdgeInsets.all(24.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                margin: const EdgeInsets.only(top: 10.0, bottom: 20.0),
+                child: Text(
+                  message ??
+                      "This is a flutter activity \n params:${widget.params}",
+                  style: TextStyle(fontSize: 28.0, color: Colors.blue),
                 ),
+                alignment: AlignmentDirectional.center,
+              ),
 //                Expanded(child: Container()),
-                const CupertinoTextField(
-                  prefix: Icon(
-                    CupertinoIcons.person_solid,
-                    color: CupertinoColors.lightBackgroundGray,
-                    size: 28.0,
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 6.0, vertical: 12.0),
-                  clearButtonMode: OverlayVisibilityMode.editing,
-                  textCapitalization: TextCapitalization.words,
-                  autocorrect: false,
-                  decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(width: 0.0, color: CupertinoColors.inactiveGray)),
-                  ),
-                  placeholder: 'Name',
+              const CupertinoTextField(
+                prefix: Icon(
+                  CupertinoIcons.person_solid,
+                  color: CupertinoColors.lightBackgroundGray,
+                  size: 28.0,
                 ),
-                InkWell(
-                  child: Container(
-                      padding: const EdgeInsets.all(8.0),
-                      margin: const EdgeInsets.all(8.0),
-                      color: Colors.yellow,
-                      child: Text(
-                        'open native page',
-                        style: TextStyle(fontSize: 22.0, color: Colors.black),
-                      )),
+                padding: EdgeInsets.symmetric(horizontal: 6.0, vertical: 12.0),
+                clearButtonMode: OverlayVisibilityMode.editing,
+                textCapitalization: TextCapitalization.words,
+                autocorrect: false,
+                decoration: BoxDecoration(
+                  border: Border(
+                      bottom: BorderSide(
+                          width: 0.0, color: CupertinoColors.inactiveGray)),
+                ),
+                placeholder: 'Name',
+              ),
+              InkWell(
+                child: Container(
+                    padding: const EdgeInsets.all(8.0),
+                    margin: const EdgeInsets.all(8.0),
+                    color: Colors.yellow,
+                    child: Text(
+                      'open native page',
+                      style: TextStyle(fontSize: 22.0, color: Colors.black),
+                    )),
 
-                  ///后面的参数会在native的IPlatform.startActivity方法回调中拼接到url的query部分。
-                  ///例如：sample://nativePage?aaa=bbb
-                  onTap: () => FlutterBoost.singleton
-                      .open("sample://nativePage", urlParams: <dynamic,dynamic>{
-                    "query": {"aaa": "bbb"}
-                  }),
-                ),
-                InkWell(
-                  child: Container(
-                      padding: const EdgeInsets.all(8.0),
-                      margin: const EdgeInsets.all(8.0),
-                      color: Colors.yellow,
-                      child: Text(
-                        'open first',
-                        style: TextStyle(fontSize: 22.0, color: Colors.black),
-                      )),
+                ///后面的参数会在native的IPlatform.startActivity方法回调中拼接到url的query部分。
+                ///例如：sample://nativePage?aaa=bbb
+                onTap: () => FlutterBoost.singleton
+                    .open("sample://nativePage", urlParams: <dynamic, dynamic>{
+                  "query": {"aaa": "bbb"}
+                }),
+              ),
+              InkWell(
+                child: Container(
+                    padding: const EdgeInsets.all(8.0),
+                    margin: const EdgeInsets.all(8.0),
+                    color: Colors.yellow,
+                    child: Text(
+                      'open first',
+                      style: TextStyle(fontSize: 22.0, color: Colors.black),
+                    )),
 
-                  ///后面的参数会在native的IPlatform.startActivity方法回调中拼接到url的query部分。
-                  ///例如：sample://nativePage?aaa=bbb
-                  onTap: () => FlutterBoost.singleton
-                      .open("first", urlParams: <dynamic,dynamic>{
-                    "query": {"aaa": "bbb"}
-                  }),
-                ),
-                InkWell(
-                  child: Container(
-                      padding: const EdgeInsets.all(8.0),
-                      margin: const EdgeInsets.all(8.0),
-                      color: Colors.yellow,
-                      child: Text(
-                        'open second',
-                        style: TextStyle(fontSize: 22.0, color: Colors.black),
-                      )),
+                ///后面的参数会在native的IPlatform.startActivity方法回调中拼接到url的query部分。
+                ///例如：sample://nativePage?aaa=bbb
+                onTap: () => FlutterBoost.singleton
+                    .open("first", urlParams: <dynamic, dynamic>{
+                  "query": {"aaa": "bbb"}
+                }),
+              ),
+              InkWell(
+                child: Container(
+                    padding: const EdgeInsets.all(8.0),
+                    margin: const EdgeInsets.all(8.0),
+                    color: Colors.yellow,
+                    child: Text(
+                      'open second',
+                      style: TextStyle(fontSize: 22.0, color: Colors.black),
+                    )),
 
-                  ///后面的参数会在native的IPlatform.startActivity方法回调中拼接到url的query部分。
-                  ///例如：sample://nativePage?aaa=bbb
-                  onTap: () => FlutterBoost.singleton
-                      .open("second", urlParams:<dynamic,dynamic> {
-                    "query": {"aaa": "bbb"}
-                  }),
-                ),
-                InkWell(
-                  child: Container(
-                      padding: const EdgeInsets.all(8.0),
-                      margin: const EdgeInsets.all(8.0),
-                      color: Colors.yellow,
-                      child: Text(
-                        'open tab',
-                        style: TextStyle(fontSize: 22.0, color: Colors.black),
-                      )),
+                ///后面的参数会在native的IPlatform.startActivity方法回调中拼接到url的query部分。
+                ///例如：sample://nativePage?aaa=bbb
+                onTap: () => FlutterBoost.singleton
+                    .open("second", urlParams: <dynamic, dynamic>{
+                  "query": {"aaa": "bbb"}
+                }),
+              ),
+              InkWell(
+                child: Container(
+                    padding: const EdgeInsets.all(8.0),
+                    margin: const EdgeInsets.all(8.0),
+                    color: Colors.yellow,
+                    child: Text(
+                      'open tab',
+                      style: TextStyle(fontSize: 22.0, color: Colors.black),
+                    )),
 
-                  ///后面的参数会在native的IPlatform.startActivity方法回调中拼接到url的query部分。
-                  ///例如：sample://nativePage?aaa=bbb
-                  onTap: () => FlutterBoost.singleton
-                      .open("tab", urlParams:<dynamic,dynamic> {
-                    "query": {"aaa": "bbb"}
-                  }),
-                ),
-                InkWell(
-                  child: Container(
-                      padding: const EdgeInsets.all(8.0),
-                      margin: const EdgeInsets.all(8.0),
-                      color: Colors.yellow,
-                      child: Text(
-                        'open flutter page',
-                        style: TextStyle(fontSize: 22.0, color: Colors.black),
-                      )),
+                ///后面的参数会在native的IPlatform.startActivity方法回调中拼接到url的query部分。
+                ///例如：sample://nativePage?aaa=bbb
+                onTap: () => FlutterBoost.singleton
+                    .open("tab", urlParams: <dynamic, dynamic>{
+                  "query": {"aaa": "bbb"}
+                }),
+              ),
+              InkWell(
+                child: Container(
+                    padding: const EdgeInsets.all(8.0),
+                    margin: const EdgeInsets.all(8.0),
+                    color: Colors.yellow,
+                    child: Text(
+                      'open flutter page',
+                      style: TextStyle(fontSize: 22.0, color: Colors.black),
+                    )),
 
-                  ///后面的参数会在native的IPlatform.startActivity方法回调中拼接到url的query部分。
-                  ///例如：sample://nativePage?aaa=bbb
-                  onTap: () => FlutterBoost.singleton
-                      .open("sample://flutterPage", urlParams:<String,dynamic> {
-                    "query": {"aaa": "bbb"}
-                  }),
-                ),
-                InkWell(
-                  child: Container(
-                      padding: const EdgeInsets.all(8.0),
-                      margin: const EdgeInsets.all(8.0),
-                      color: Colors.yellow,
-                      child: Text(
-                        'push flutter widget',
-                        style: TextStyle(fontSize: 22.0, color: Colors.black),
-                      )),
-                  onTap: () {
+                ///后面的参数会在native的IPlatform.startActivity方法回调中拼接到url的query部分。
+                ///例如：sample://nativePage?aaa=bbb
+                onTap: () => FlutterBoost.singleton
+                    .open("sample://flutterPage", urlParams: <String, dynamic>{
+                  "query": {"aaa": "bbb"}
+                }),
+              ),
+              InkWell(
+                child: Container(
+                    padding: const EdgeInsets.all(8.0),
+                    margin: const EdgeInsets.all(8.0),
+                    color: Colors.yellow,
+                    child: Text(
+                      'push flutter widget',
+                      style: TextStyle(fontSize: 22.0, color: Colors.black),
+                    )),
+                onTap: () {
                   Navigator.push<dynamic>(context,
-                        MaterialPageRoute<dynamic>(builder: (_) => PushWidget()));
-                  },
-                ),
+                      MaterialPageRoute<dynamic>(builder: (_) => PushWidget()));
+                },
+              ),
 
               InkWell(
                 child: Container(
@@ -442,25 +480,26 @@ class _FlutterRouteWidgetState extends State<FlutterRouteWidget> {
                       style: TextStyle(fontSize: 22.0, color: Colors.black),
                     )),
                 onTap: () {
-                  Navigator.push<dynamic>(context,
-                      MaterialPageRoute<dynamic>(builder: (_) => PlatformRouteWidget()));
+                  Navigator.push<dynamic>(
+                      context,
+                      MaterialPageRoute<dynamic>(
+                          builder: (_) => PlatformRouteWidget()));
                 },
               ),
-                InkWell(
-                  child: Container(
-                      padding: const EdgeInsets.all(8.0),
-                      margin: const EdgeInsets.all(8.0),
-                      color: Colors.yellow,
-                      child: Text(
-                        'open flutter fragment page',
-                        style: TextStyle(fontSize: 22.0, color: Colors.black),
-                      )),
-                  onTap: () => FlutterBoost.singleton
-                      .open("sample://flutterFragmentPage"),
-                ),
-              ],
-            ),
-
+              InkWell(
+                child: Container(
+                    padding: const EdgeInsets.all(8.0),
+                    margin: const EdgeInsets.all(8.0),
+                    color: Colors.yellow,
+                    child: Text(
+                      'open flutter fragment page',
+                      style: TextStyle(fontSize: 22.0, color: Colors.black),
+                    )),
+                onTap: () =>
+                    FlutterBoost.singleton.open("sample://flutterFragmentPage"),
+              ),
+            ],
+          ),
         ),
       ),
     );

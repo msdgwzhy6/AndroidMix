@@ -69,11 +69,8 @@ public class MyApplication extends Application {
 
                     @Override
                     public void onCancel(Object arguments) {
-
                     }
                 });
-
-
 
                 // 注册PlatformView viewTypeId要和flutter中的viewType对应
                 FlutterBoost
