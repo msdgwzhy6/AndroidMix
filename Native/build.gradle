@@ -18,7 +18,7 @@ allprojects {
         jcenter()
 
         maven {
-            url '/Users/liangchaojie/Desktop/demo/FlutterBoostDemo/flutter_module/build/host/outputs/repo'
+            url '/Users/Nayuta/Desktop/example/FlutterBoostDemo/flutter_module/build/host/outputs/repo'
         }
         maven {
             url 'http://download.flutter.io'
