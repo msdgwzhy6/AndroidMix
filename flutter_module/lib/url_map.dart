@@ -1,6 +1,10 @@
+import 'package:flutter/cupertino.dart';
+import 'package:fluttermodule/flutter_boost_example.dart';
 import 'package:fluttermodule/simple_page_widgets.dart';
 
-Map urlMap = {
+typedef Widget PageBuilder(String pageName, Map params, String uniqueId);
+
+Map<String, PageBuilder> urlMap = {
   'embeded': (pageName, params, _) => EmbededFirstRouteWidget(),
   'first': (pageName, params, _) => FirstRouteWidget(),
   'firstFirst': (pageName, params, _) => FirstRouteWidget(),

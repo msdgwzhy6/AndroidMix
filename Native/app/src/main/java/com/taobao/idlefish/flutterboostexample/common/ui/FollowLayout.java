@@ -64,7 +64,7 @@ public class FollowLayout extends ViewGroup {
         int childHeight = getChildMeasureSpec(heightMeasureSpec, paddingTop + paddingBottom,
             layoutParams.height);
         childView.measure(childWidth, childHeight);
-
+        //measureChildWithMargins(childView,widthMeasureSpec,0,heightMeasureSpec,0);
         curWidth += childView.getMeasuredWidth();
         maxHeight = Math.max(maxHeight, childView.getMeasuredHeight());
         if (curWidth > selfWidth) {
@@ -85,8 +85,8 @@ public class FollowLayout extends ViewGroup {
         }
       }
     }
-
-    //finalWidth = widthMode == MeasureSpec.EXACTLY:selfWidth?
+    finalHeight += getPaddingBottom();
+    finalHeight += getPaddingTop();
     int measureHeight = heightMode == MeasureSpec.EXACTLY ? selfHeight : finalHeight;
     setMeasuredDimension(selfWidth, measureHeight);
   }

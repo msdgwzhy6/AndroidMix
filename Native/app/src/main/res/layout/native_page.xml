@@ -19,9 +19,7 @@
   <com.taobao.idlefish.flutterboostexample.common.ui.FollowLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:paddingLeft="10dp"
-    android:paddingTop="10dp">
+    android:layout_marginTop="10dp">
 
     <TextView
       android:id="@+id/open_native"
@@ -57,6 +55,21 @@
       android:background="@android:color/holo_orange_dark"
       android:padding="8.0dp"
       android:text="@string/open_flutter_fragment"
+      android:textAllCaps="false"
+      android:textColor="@android:color/black"
+      android:textSize="16sp" />
+
+    <TextView
+      android:id="@+id/open_weather"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="8.0dp"
+      android:layout_marginTop="8.0dp"
+      android:layout_marginRight="8.0dp"
+      android:layout_marginBottom="80.0dp"
+      android:background="@android:color/holo_orange_dark"
+      android:padding="8.0dp"
+      android:text="  启动flutter 天气主页  "
       android:textAllCaps="false"
       android:textColor="@android:color/black"
       android:textSize="16sp" />
