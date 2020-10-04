@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:fluttermodule/flutter_boost_example.dart';
 import 'package:fluttermodule/simple_page_widgets.dart';
+import 'package:fluttermodule/weather/page/weather_home.dart';
 
 typedef Widget PageBuilder(String pageName, Map params, String uniqueId);
 
@@ -13,6 +14,7 @@ Map<String, PageBuilder> urlMap = {
   'tab': (pageName, params, _) => TabRouteWidget(),
   'platformView': (pageName, params, _) => PlatformRouteWidget(),
   'flutterFragment': (pageName, params, _) => FragmentRouteWidget(params),
+  'weather_home': (pageName, params, _) => WeatherHome(params: params),
 
   ///可以在native层通过 getContainerParams 来传递参数
   'flutterPage': (pageName, params, _) {

@@ -11,15 +11,18 @@ import android.widget.TextView;
 import com.idlefish.flutterboost.FlutterBoost;
 
 import com.taobao.idlefish.flutterboostexample.common.util.butterknife.OnClick;
+import com.taobao.idlefish.flutterboostexample.common.util.router.FlutterRouter;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
 import io.flutter.plugin.common.EventChannel;
 
+import static com.taobao.idlefish.flutterboostexample.common.util.router.FlutterRouter.WEATHER_HOME;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-  public static String TAG = "djd "+MainActivity.class.getName();
+  public static String TAG = "djd " + MainActivity.class.getName();
   public static WeakReference<MainActivity> sRef;
 
   private TextView mOpenNative;
@@ -64,8 +67,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
       PageRouter.openPageByUrl(this, PageRouter.FLUTTER_FRAGMENT_PAGE_URL, params);
     }
   }
+
   @OnClick(R.id.open_weather)
   public void goToWeather(View v) {
-      Log.i(TAG, "goToWeather: ");
+    Log.i(TAG, "goToWeather: ");
+    FlutterRouter.openFlutterPage(this, WEATHER_HOME, new HashMap(),1);
   }
 }

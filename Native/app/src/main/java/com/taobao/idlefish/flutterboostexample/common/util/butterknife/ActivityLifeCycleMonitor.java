@@ -21,7 +21,7 @@ public class ActivityLifeCycleMonitor
   @Override
   public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
     //此处回调会在调用super.onCreate执行，如果没有setContentView就会导致findView失效
-    BindingUtil.uiBind(activity);
+    //BindingUtil.uiBind(activity);
   }
 
   @Override
