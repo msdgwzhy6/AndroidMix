@@ -100,7 +100,7 @@ class _FlutterRouteWidgetState extends State<FlutterRouteWidget> {
                     margin: const EdgeInsets.all(8.0),
                     color: Colors.yellow,
                     child: Text(
-                      'open second',
+                      'EventMethodChanel Flutter接受Native侧传来的数据',
                       style: TextStyle(fontSize: 22.0, color: Colors.black),
                     )),
 

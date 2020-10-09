@@ -6,9 +6,12 @@ import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
+import android.widget.Toast;
+import androidx.annotation.RequiresApi;
 import com.idlefish.flutterboost.*;
 
 import com.taobao.idlefish.flutterboostexample.common.util.butterknife.ActivityLifeCycleMonitor;
+import io.flutter.plugin.platform.PlatformViewRegistry;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,6 +48,7 @@ public class MyApplication extends Application {
 
           }
 
+          @RequiresApi(api = Build.VERSION_CODES.N)
           @Override
           public void onEngineCreated() {
 
@@ -56,6 +60,11 @@ public class MyApplication extends Application {
 
               if (call.method.equals("getPlatformVersion")) {
                 result.success(Build.VERSION.RELEASE);
+              } else if (call.method.equals("toast")) {
+                String message = call.arguments.toString();
+                Toast toast = Toast.makeText(ActivityLifeCycleMonitor.getTopActivity(), message,
+                    Toast.LENGTH_SHORT);
+                toast.show();
               } else {
                 result.notImplemented();
               }
@@ -75,14 +84,14 @@ public class MyApplication extends Application {
               }
             });
 
-            // 注册PlatformView viewTypeId要和flutter中的viewType对应
-            FlutterBoost
+            // 注册PlatformView viewTypeI和flutter中的viewType对应
+            PlatformViewRegistry registry = FlutterBoost
                 .instance()
                 .engineProvider()
                 .getPlatformViewsController()
-                .getRegistry()
-                .registerViewFactory("plugins.test/view",
-                    new TextPlatformViewFactory(StandardMessageCodec.INSTANCE));
+                .getRegistry();
+            PlatformViewMap.PLATFORM_VIEW_FACTORY_MAP.forEach(
+                (k, v) -> registry.registerViewFactory(k, v));
           }
 
           @Override

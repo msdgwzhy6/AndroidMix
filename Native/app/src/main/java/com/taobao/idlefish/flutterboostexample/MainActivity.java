@@ -71,6 +71,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   @OnClick(R.id.open_weather)
   public void goToWeather(View v) {
     Log.i(TAG, "goToWeather: ");
-    FlutterRouter.openFlutterPage(this, WEATHER_HOME, new HashMap(),1);
+    FlutterRouter.openFlutterPage(this, WEATHER_HOME, new HashMap(), 1);
+  }
+
+  @OnClick(R.id.send_flutter_message)
+  public void sendMessageToFlutter(View v) {
   }
 }

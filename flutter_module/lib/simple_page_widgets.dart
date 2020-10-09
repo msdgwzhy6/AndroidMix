@@ -230,7 +230,7 @@ class _SecondStatefulRouteWidgetState extends State<SecondStatefulRouteWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("SecondStateful Route"),
+        title: Text("Flutter接受Native侧传来的数据"),
       ),
       body: Center(
         child: RaisedButton(
