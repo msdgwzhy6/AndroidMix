@@ -1,9 +1,11 @@
 package com.taobao.idlefish.flutterboostexample.common.ui;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import com.taobao.idlefish.flutterboostexample.R;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,8 @@ import java.util.List;
 public class FollowLayout extends ViewGroup {
   List<List<View>> allView = new ArrayList<>();
   List<Integer> linesHeight = new ArrayList<>();
+  int verSpacing = 0;
+  int horSpacing = 0;
 
   public FollowLayout(Context context) {
     super(context);
@@ -22,14 +26,24 @@ public class FollowLayout extends ViewGroup {
 
   public FollowLayout(Context context, AttributeSet attrs) {
     super(context, attrs);
+    init(context, attrs);
   }
 
   public FollowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
+    init(context, attrs);
   }
 
   public FollowLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
     super(context, attrs, defStyleAttr, defStyleRes);
+    init(context, attrs);
+  }
+
+  public void init(Context context, AttributeSet attrs) {
+    TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.FollowLayout);
+    verSpacing = typedArray.getDimensionPixelSize(R.styleable.FollowLayout_ver_spacing, verSpacing);
+    horSpacing = typedArray.getDimensionPixelSize(R.styleable.FollowLayout_hor_spacing, horSpacing);
+    typedArray.recycle();
   }
 
   @Override
@@ -65,8 +79,8 @@ public class FollowLayout extends ViewGroup {
             layoutParams.height);
         childView.measure(childWidth, childHeight);
         //measureChildWithMargins(childView,widthMeasureSpec,0,heightMeasureSpec,0);
-        curWidth += childView.getMeasuredWidth();
-        maxHeight = Math.max(maxHeight, childView.getMeasuredHeight());
+        curWidth += childView.getMeasuredWidth() + horSpacing;
+        maxHeight = Math.max(maxHeight, childView.getMeasuredHeight() + verSpacing);
         if (curWidth > selfWidth) {
           allView.add(lineView);
           linesHeight.add(maxHeight);
@@ -100,8 +114,8 @@ public class FollowLayout extends ViewGroup {
     for (List<View> views : allView) {
       for (View view : views) {
         view.layout(leftUse, topUse, leftUse + view.getMeasuredWidth(),
-            topUse + linesHeight.get(lineCount));
-        leftUse += view.getMeasuredWidth();
+            topUse + linesHeight.get(lineCount)-verSpacing);
+        leftUse += view.getMeasuredWidth()+horSpacing;
       }
       topUse += linesHeight.get(lineCount);
       leftUse = getPaddingLeft();
