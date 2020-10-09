@@ -31,6 +31,8 @@ dependencies:
     git:
      url: 'https://github.com/canoninmajord/FlutterGo'
      ref: 'master'
+  dio: 3.0.0
+  equatable: ^1.2.3
 
 dev_dependencies:
   flutter_test:
