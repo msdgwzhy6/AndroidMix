@@ -21,8 +21,7 @@ public class BindingUtil {
     Class c = var.getClass();
     Log.i(TAG, "uiBind: " + c.getName());
 
-    Field[] fields = c.getFields();
-    Method[] methods = c.getMethods();
+    Field[] fields = c.getDeclaredFields();
     for (Field field : fields) {
       if (field.isAnnotationPresent(ViewId.class)) {
         ViewId viewId = field.getAnnotation(ViewId.class);
@@ -36,6 +35,15 @@ public class BindingUtil {
       }
     }
 
+
+  }
+
+  public static <T extends Activity> void funcBind(T var) {
+    //这里能拿到的的是Activity还是具体对象的属性呢
+    //这里因为传进来的是Activity的对象，所以getClass拿到的是实际的class
+    Class c = var.getClass();
+    Log.i(TAG, "uiBind: " + c.getName());
+    Method[] methods = c.getDeclaredMethods();
     for (Method method : methods) {
       if (method.isAnnotationPresent(OnClick.class)) {
         OnClick onClick = method.getAnnotation(OnClick.class);
@@ -56,4 +64,5 @@ public class BindingUtil {
       }
     }
   }
+
 }

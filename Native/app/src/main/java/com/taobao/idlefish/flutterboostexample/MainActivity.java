@@ -1,5 +1,6 @@
 package com.taobao.idlefish.flutterboostexample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import com.idlefish.flutterboost.FlutterBoost;
 
 import com.taobao.idlefish.flutterboostexample.common.util.butterknife.OnClick;
 import com.taobao.idlefish.flutterboostexample.common.util.router.FlutterRouter;
+import com.taobao.idlefish.flutterboostexample.customeview.SunSetActivity;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
@@ -76,5 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
   @OnClick(R.id.send_flutter_message)
   public void sendMessageToFlutter(View v) {
+    Intent intent = new Intent(this, SunSetActivity.class);
+    startActivity(intent);
   }
 }

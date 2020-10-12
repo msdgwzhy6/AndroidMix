@@ -52,5 +52,6 @@ dependencies {
     debugImplementation 'com.fluttermodule:flutter_debug:1.0'
     profileImplementation 'com.fluttermodule:flutter_profile:1.0'
     releaseImplementation 'com.fluttermodule:flutter_release:1.0'
-
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
 }

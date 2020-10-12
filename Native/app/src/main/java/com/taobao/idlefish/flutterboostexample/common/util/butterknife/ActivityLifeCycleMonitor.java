@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-
 public final class ActivityLifeCycleMonitor implements Application.ActivityLifecycleCallbacks {
 
   private static String sTopActivityTag;
@@ -47,7 +46,7 @@ public final class ActivityLifeCycleMonitor implements Application.ActivityLifec
 
   @Override
   public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-
+    BindingUtil.uiBind(activity);
     final String tag = generateRecordTag(activity);
     sActivityRecords.put(tag, new ActivityRecord(activity, false));
 
@@ -59,7 +58,7 @@ public final class ActivityLifeCycleMonitor implements Application.ActivityLifec
 
   @Override
   public void onActivityStarted(Activity activity) {
-    BindingUtil.uiBind(activity);
+    BindingUtil.funcBind(activity);
     final ArrayList<Application.ActivityLifecycleCallbacks> callbacks = new ArrayList<>(sCallbacks);
     for (Application.ActivityLifecycleCallbacks callback : callbacks) {
       callback.onActivityStarted(activity);
