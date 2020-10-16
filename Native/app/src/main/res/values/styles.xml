@@ -11,4 +11,7 @@
     <attr name="ver_spacing" format="dimension" />
     <attr name="hor_spacing" format="dimension" />
   </declare-styleable>
+  <declare-styleable name="StarLayout">
+    <attr name="star_count" format="integer"/>
+  </declare-styleable>
 </resources>
