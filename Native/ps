@@ -1,6 +1,8 @@
-#bin/bash
-if [ $1 -eq 1 ]; then
-git push -u origin master
-else
-echo "hello"
-fi
+#!bin/bash
+
+cd ..
+pwd
+git commit -m "$1" ./Native
+branch_name=`git branch | grep "*" | awk '{print $2}'`
+    echo "branch: "$branch_name
+git push origin HEAD:refs/for/$branch_name
