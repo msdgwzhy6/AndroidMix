@@ -1,0 +1,21 @@
+@startuml
+Widget -> AnimationController:AnimationController()
+AnimationController -> TickerProvider: vsync.createTicker(_tick)
+TickerProvider -> Ticker: Ticker(onTick)
+
+Widget -> AnimationController:forward()
+AnimationController -> AnimationController:forward()
+AnimationController -> AnimationController:_animateToInternal(upperBound)
+AnimationController -> AnimationController:_startSimulation()
+
+AnimationController -> Ticker: start()
+Ticker -> Ticker: scheduleTick()
+Ticker -> SchedulerBinding:scheduleFrameCallback(_tick)
+SchedulerBinding -> SchedulerBinding:scheduleFrame()
+SchedulerBinding -> SchedulerBinding:ensureFrameCallbacksRegistered()
+SchedulerBinding -> SchedulerBinding:_handleBeginFrame(Duration rawTimeStamp)
+SchedulerBinding -> SchedulerBinding:_invokeFrameCallback(callbackEntry.callback);
+SchedulerBinding -> AnimationController:callback(timeStamp);
+AnimationController -> AnimationController: _tick(Duration elapsed);
+AnimationController -> Widget:notifyListeners()
+@enduml

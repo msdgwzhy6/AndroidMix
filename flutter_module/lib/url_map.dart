@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:fluttermodule/flutter_boost_example.dart';
 import 'package:fluttermodule/simple_page_widgets.dart';
+import 'package:fluttermodule/weather/common/animation/animation.dart';
 import 'package:fluttermodule/weather/page/weather_home.dart';
 
 typedef Widget PageBuilder(String pageName, Map params, String uniqueId);
@@ -20,5 +21,6 @@ Map<String, PageBuilder> urlMap = {
   'flutterPage': (pageName, params, _) {
     print("flutterPage params:$params");
     return FlutterRouteWidget(params: params);
-  }
+  },
+  "Animation": (pageName, params, _) => AnimationDemo()
 };

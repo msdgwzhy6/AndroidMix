@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttermodule/weather/common/url_const.dart';
 import 'package:fluttermodule/weather/common/util/function_tools.dart';
 import 'package:fluttermodule/weather/common/util/net_manager.dart';
-
 class WeatherHome extends StatefulWidget {
   final Map params;
 
