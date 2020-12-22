@@ -88,7 +88,7 @@ public class StarView extends View {
   }
 
   public void init() {
-    int time = (new Random().nextInt(5) + 2) * 1000;
+    int time = (new Random().nextInt(5) + 1) * 1000;
     mPaint = new Paint();
     mPath = new Path();
     mPaint.setStyle(Paint.Style.FILL);

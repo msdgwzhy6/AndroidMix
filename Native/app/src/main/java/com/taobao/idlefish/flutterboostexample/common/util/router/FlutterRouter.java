@@ -13,6 +13,9 @@ import java.util.Map;
  */
 public class FlutterRouter {
   public static String WEATHER_HOME = "weather_home";
+  public static String ANIMATION = "Animation";
+  public static String Render = "render";
+  public static String ISOLATE = "Isolate";
 
   public static void openFlutterPage(Context context, String url, Map params, int requestCode) {
     Intent intent = BoostFlutterActivity.withNewEngine().url(url).params(params)

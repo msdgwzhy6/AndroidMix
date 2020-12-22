@@ -48,7 +48,7 @@ public class PageRouter {
                 context.startActivity(new Intent(context, FlutterFragmentPageActivity.class));
                 return true;
             } else if (url.startsWith(NATIVE_PAGE_URL)) {
-                context.startActivity(new Intent(context, NativePageActivity.class));
+                context.startActivity(new Intent(context, MainActivity.class));
                 return true;
             }
 

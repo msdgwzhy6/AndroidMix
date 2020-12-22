@@ -1,0 +1,100 @@
+@startuml
+package "Widget" #DDDDDD {
+abstract class Widget
+abstract class StatelessWidget extends Widget
+abstract class StatefulWidget extends Widget
+abstract class ProxyWidget extends Widget
+abstract class RenderObjectWidget extends Widget
+}
+package "Element" #DDDDDD {
+abstract class BuildContext
+abstract class Element implements BuildContext
+abstract class ComponentElement extends Element
+class StatelessElement extends ComponentElement
+class StatefulElement extends ComponentElement
+abstract class ProxyElement extends ComponentElement
+abstract class RenderObjectElement extends Element
+class InheritedElement extends ProxyElement
+}
+Widget <|-- Element
+abstract class Widget{
+  final Key key;
+  Element createElement() //生成一个Element tree中的对象
+  static bool canUpdate(Widget oldWidget, Widget newWidget) //通过type和key判断Widget是否一致
+}
+abstract class StatelessWidget{
+  @protected Widget build(BuildContext context);
+  @override StatelessElement createElement() => StatelessElement(this)
+}
+abstract class StatefulWidget{
+  @protected State createState();
+  @override StatefulElement createElement() => StatefulElement(this)
+
+}
+abstract class ProxyWidget{
+  final Widget child;
+}
+abstract class RenderObjectWidget{
+  @override RenderObjectElement createElement();
+  @protected RenderObject createRenderObject(BuildContext context);
+  @protected void updateRenderObject(BuildContext context, covariant RenderObject renderObject)
+  @protected void didUnmountRenderObject(covariant RenderObject renderObject) { }
+}
+
+abstract class BuildContext{
+  Widget get widget; //返回当前widget
+  BuildOwner get owner; //负责build的Owner
+  Size get size; //完成会之后通过[findRenderObject]获取绘制[RenderBox]，build阶段为空
+  RenderObject findRenderObject()
+  InheritedWidget dependOnInheritedElement(InheritedElement ancestor, { Object aspect })
+  T dependOnInheritedWidgetOfExactType<T extends InheritedWidget>({ Object aspect });
+  Widget ancestorWidgetOfExactType(Type targetType);
+  T findAncestorStateOfType<T extends State>();
+  void visitAncestorElements(bool visitor(Element element));
+  T findAncestorRenderObjectOfType<T extends RenderObject>();
+  void visitChildElements(ElementVisitor visitor)
+}
+abstract class Element{
+  Element _parent;
+  Map<Type, InheritedElement> _inheritedWidgets;
+  Set<InheritedElement> _dependencies;
+  bool get dirty => _dirty;
+  dynamic get slot => _slot;//父类设置标志这个孩子在父类中的位置
+  int get depth => _depth;
+  void reassemble()//debug的时候回调用，标记自身以及子View为dirty
+  RenderObject get renderObject//返回一个当前或者最近子节点的RenderObject
+  void visitChildren(ElementVisitor visitor) { }
+  Element updateChild(Element child, Widget newWidget, dynamic newSlot)
+  void mount(Element parent, dynamic newSlot)
+  void activate()
+  void deactivate()
+  void unmount()
+  void update(covariant Widget newWidget)
+  void updateSlotForChild(Element child, dynamic newSlot)
+  void markNeedsBuild()
+  void performRebuild();
+}
+abstract class ComponentElement{
+  Widget build();
+
+}
+class StatefulElement{
+  State<StatefulWidget> get state => _state;
+  Widget build() => state.build(this);
+
+}
+class StatelessElement{
+  StatelessWidget get widget => super.widget;
+  Widget build() => widget.build(this);
+  void update(StatelessWidget newWidget)
+}
+class ProxyElement{
+  void notifyClients(covariant ProxyWidget oldWidget);
+}
+class RenderObjectElement{
+  void insertChildRenderObject(covariant RenderObject child, covariant dynamic slot);
+  void moveChildRenderObject(covariant RenderObject child, covariant dynamic slot);
+  void removeChildRenderObject(covariant RenderObject child);
+
+}
+@enduml

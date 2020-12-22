@@ -15,13 +15,14 @@
     android:name=".MyApplication"
     android:icon="@mipmap/ic_launcher"
     android:label="flutter_boost_example">
-    <activity android:name=".customeview.SunSetActivity"
-      android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+    <activity
+      android:name=".customeview.SunSetActivity"
+      android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     <activity
       android:name=".MainActivity"
       android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density"
       android:hardwareAccelerated="true"
-      android:launchMode="singleTop"
+      android:launchMode="standard"
       android:theme="@style/Theme.AppCompat"
       android:windowSoftInputMode="adjustResize">
       <intent-filter>
@@ -58,7 +59,7 @@
 
     <meta-data
       android:name="flutterEmbedding"
-      android:value="2"></meta-data>
+      android:value="2" />
   </application>
 
 </manifest>

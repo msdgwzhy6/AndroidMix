@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:fluttermodule/flutter_boost_example.dart';
+import 'package:fluttermodule/isolate/isolate_test.dart';
+import 'package:fluttermodule/render/Render.dart';
 import 'package:fluttermodule/simple_page_widgets.dart';
 import 'package:fluttermodule/weather/common/animation/animation.dart';
 import 'package:fluttermodule/weather/page/weather_home.dart';
 
 typedef Widget PageBuilder(String pageName, Map params, String uniqueId);
-
 Map<String, PageBuilder> urlMap = {
   'embeded': (pageName, params, _) => EmbededFirstRouteWidget(),
   'first': (pageName, params, _) => FirstRouteWidget(),
@@ -22,5 +23,7 @@ Map<String, PageBuilder> urlMap = {
     print("flutterPage params:$params");
     return FlutterRouteWidget(params: params);
   },
-  "Animation": (pageName, params, _) => AnimationDemo()
+  "Animation": (pageName, params, _) => AnimationDemo(),
+  "render": (pageName, params, _) => ContainerTest(),
+  "Isolate": (pageName, params, _) => IsolateTest()
 };

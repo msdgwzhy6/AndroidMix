@@ -14,4 +14,8 @@
   <declare-styleable name="StarLayout">
     <attr name="star_count" format="integer"/>
   </declare-styleable>
+
+  <declare-styleable name="Skeleton">
+    <attr name="show" format="boolean" />
+  </declare-styleable>
 </resources>

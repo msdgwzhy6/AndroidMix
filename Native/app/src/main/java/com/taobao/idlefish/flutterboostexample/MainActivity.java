@@ -2,27 +2,29 @@ package com.taobao.idlefish.flutterboostexample;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-
-import com.idlefish.flutterboost.FlutterBoost;
-
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import com.taobao.idlefish.flutterboostexample.common.util.butterknife.OnClick;
 import com.taobao.idlefish.flutterboostexample.common.util.router.FlutterRouter;
 import com.taobao.idlefish.flutterboostexample.customeview.SunSetActivity;
+import com.taobao.idlefish.flutterboostexample.ndk.JNI;
+import com.taobao.idlefish.flutterboostexample.skeleton.tools.TextSkinChange;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.flutter.plugin.common.EventChannel;
-
+import static com.taobao.idlefish.flutterboostexample.common.util.router.FlutterRouter.ANIMATION;
+import static com.taobao.idlefish.flutterboostexample.common.util.router.FlutterRouter.ISOLATE;
+import static com.taobao.idlefish.flutterboostexample.common.util.router.FlutterRouter.Render;
 import static com.taobao.idlefish.flutterboostexample.common.util.router.FlutterRouter.WEATHER_HOME;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+  static {
+    System.loadLibrary("thread-lib");
+  }
 
   public static String TAG = "djd " + MainActivity.class.getName();
   public static WeakReference<MainActivity> sRef;
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
+    TextSkinChange.forkLayout(this);
     sRef = new WeakReference<>(this);
 
     setContentView(R.layout.native_page);
@@ -76,9 +78,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     FlutterRouter.openFlutterPage(this, WEATHER_HOME, new HashMap(), 1);
   }
 
-  @OnClick(R.id.send_flutter_message)
+  @OnClick(R.id.sun_set)
   public void sendMessageToFlutter(View v) {
     Intent intent = new Intent(this, SunSetActivity.class);
     startActivity(intent);
+  }
+
+  @OnClick(R.id.huanfu)
+  public void openSettingActivity(View v) {
+    mOpenNative.setText(JNI.stringFromJNI());
+  }
+
+  @OnClick(R.id.flutter_animation)
+  public void openFlutterAnimation(View v) {
+    FlutterRouter.openFlutterPage(this, ANIMATION, new HashMap(), 1);
+  }
+
+  @OnClick(R.id.render)
+  public void openRender(View v) {
+    FlutterRouter.openFlutterPage(this, Render, new HashMap(), 1);
+  }
+
+  @OnClick(R.id.isolate)
+  public void openIsolate(View v) {
+    FlutterRouter.openFlutterPage(this, ISOLATE, new HashMap(), 1);
   }
 }

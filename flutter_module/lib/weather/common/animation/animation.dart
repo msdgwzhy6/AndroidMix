@@ -61,7 +61,7 @@ class _AnimationDemoState extends State<AnimationDemo>
         lowerBound: 0,
         upperBound: 1);
     //弹性
-    animation = CurvedAnimation(parent: controller, curve: Curves.bounceIn);
+    animation = CurvedAnimation(parent: controller, curve: Curves.bounceInOut);
     //使用Color
     animation.addListener(() {
       setState(() {

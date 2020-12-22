@@ -78,7 +78,7 @@
       android:textSize="16sp" />
 
     <TextView
-      android:id="@+id/send_flutter_message"
+      android:id="@+id/sun_set"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginLeft="8.0dp"
@@ -87,7 +87,80 @@
       android:layout_marginBottom="80.0dp"
       android:background="@android:color/holo_orange_dark"
       android:padding="8.0dp"
-      android:text="  发送message到flutter  "
+      android:text="  日落页面  "
+      android:textAllCaps="false"
+      android:textColor="@android:color/black"
+      android:textSize="16sp" />
+
+    <TextView
+      android:id="@+id/skeleton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="8.0dp"
+      android:layout_marginTop="8.0dp"
+      android:layout_marginRight="8.0dp"
+      android:layout_marginBottom="80.0dp"
+      android:background="@android:color/holo_orange_dark"
+      android:padding="8.0dp"
+      android:text="  骨架屏方案思路  "
+      android:textAllCaps="false"
+      android:textColor="@android:color/black"
+      android:textSize="16sp" />
+
+    <TextView
+      android:id="@+id/huanfu"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="8.0dp"
+      android:layout_marginTop="8.0dp"
+      android:layout_marginRight="8.0dp"
+      android:layout_marginBottom="80.0dp"
+      android:background="@android:color/holo_orange_dark"
+      android:padding="8.0dp"
+      android:text="  插件化换肤方案  "
+      android:textAllCaps="false"
+      android:textColor="@android:color/black"
+      android:textSize="16sp" />
+
+    <TextView
+      android:id="@+id/flutter_animation"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="8.0dp"
+      android:layout_marginTop="8.0dp"
+      android:layout_marginRight="8.0dp"
+      android:layout_marginBottom="80.0dp"
+      android:background="@android:color/holo_orange_dark"
+      android:padding="8.0dp"
+      android:text="  flutter动画  "
+      android:textAllCaps="false"
+      android:textColor="@android:color/black"
+      android:textSize="16sp" />
+    <TextView
+      android:id="@+id/render"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="8.0dp"
+      android:layout_marginTop="8.0dp"
+      android:layout_marginRight="8.0dp"
+      android:layout_marginBottom="80.0dp"
+      android:background="@android:color/holo_orange_dark"
+      android:padding="8.0dp"
+      android:text="  flutter约束学习  "
+      android:textAllCaps="false"
+      android:textColor="@android:color/black"
+      android:textSize="16sp" />
+    <TextView
+      android:id="@+id/isolate"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="8.0dp"
+      android:layout_marginTop="8.0dp"
+      android:layout_marginRight="8.0dp"
+      android:layout_marginBottom="80.0dp"
+      android:background="@android:color/holo_orange_dark"
+      android:padding="8.0dp"
+      android:text="  flutter isolate学习  "
       android:textAllCaps="false"
       android:textColor="@android:color/black"
       android:textSize="16sp" />
